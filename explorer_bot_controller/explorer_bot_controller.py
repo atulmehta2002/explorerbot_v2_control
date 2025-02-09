@@ -44,7 +44,7 @@ class ExplorerBotController(Node):
 
         # Subscribe to /cmd_vel
         self.subscription = self.create_subscription(
-            Twist, "/cmd_vel", self.cmd_vel_callback, 10
+            Twist, "/diffbot_base_controller/cmd_vel_unstamped", self.cmd_vel_callback, 10
         )
 
         self.get_logger().info("Robot Controller Node Started.")
@@ -54,6 +54,7 @@ class ExplorerBotController(Node):
 
         # Timer to reset the servo if no commands received
         self.last_command_time = self.get_clock().now()
+        self.timer = self.create_timer(1.0, self.check_timeout)
 
     def motor_init(self):
         """Initialize Motor Type and Encoder Polarity"""
@@ -68,12 +69,16 @@ class ExplorerBotController(Node):
 
         # Extract linear and angular velocity
         linear_velocity = msg.linear.x  # Forward/Backward
-        angular_velocity = msg.angular.z  # Left/Right
+        angular_velocity = msg.angular.z  # Left/
+        
+        left_speed = int((linear_velocity) * 32)
+        right_speed = int((linear_velocity) * 32)
 
-        # Convert linear velocity to motor speed
-        speed = int(linear_velocity * 25)  # Adjust scale factor as needed
-        speed = max(-100, min(100, speed))  # Clamp between -100 and 100
-        motor_speeds = [-speed, 0, speed, 0]  # Assuming all motors move together
+        left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
+        right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
+
+        # Create motor command array
+        motor_speeds = [-left_speed, 0, right_speed, 0]
 
         # Send motor speed via I2C
         bus.write_i2c_block_data(MOTOR_ADDR, MOTOR_FIXED_SPEED_ADDR, motor_speeds)
@@ -89,7 +94,17 @@ class ExplorerBotController(Node):
         servo0.angle = servo_angle
         self.last_command_time = self.get_clock().now()
 
-        self.get_logger().info(f"Motors: {speed}, Servo Angle: {servo_angle}° (angular.z: {angular_velocity})")
+        self.get_logger().info(f"Motor_L: {left_speed}, Motor_R: {right_speed}, Servo Angle: {servo_angle}° (angular.z: {angular_velocity})")
+
+    def check_timeout(self):
+        """Checks if the last command was received more than 2 seconds ago and resets motors and servo"""
+        time_elapsed = (self.get_clock().now() - self.last_command_time).nanoseconds / 1e9
+        if time_elapsed > 0.3:
+            self.stop_motors()
+            global servo_angle
+            servo_angle = 90  # Reset servo to center
+            servo0.angle = servo_angle
+            self.get_logger().info("No command received in 0.3s, resetting motors and servo.")
 
     def stop_motors(self):
         """Stops the motors on shutdown"""

@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='explorer',
+    maintainer='atulmehta0510@gmail.com',
     maintainer_email='explorer@todo.todo',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-		'i2c_motor_driver=explorer_bot_controller.i2c_motor_driver:main',
+		'explorer_bot_controller=explorer_bot_controller.explorer_bot_controller:main',
         ],
     },
 )
