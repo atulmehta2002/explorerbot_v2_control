@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-		'explorer_bot_controller=explorer_bot_controller.explorer_bot_controller:main',
+		'i2c_motor_driver=explorer_bot_controller.i2c_motor_driver:main',
         ],
     },
 )
