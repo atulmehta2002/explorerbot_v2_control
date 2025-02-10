@@ -78,19 +78,17 @@ class ExplorerBotController(Node):
         #     left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
         #     right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
             
-        if angular_velocity != 0.0 & linear_velocity == 0.0:
-            left_speed = int((angular_velocity) * 16)
-            right_speed = int((angular_velocity) * 16)
-            
-            left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
-            right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
-
-        else :
-            left_speed = int((linear_velocity) * 35)
-            right_speed = int((linear_velocity) * 35)
-            
-            left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
-            right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
+       if angular_velocity != 0.0 and linear_velocity == 0.0:
+            left_speed = int(angular_velocity * 16)
+            right_speed = int(angular_velocity * 16)
+        
+        else:
+            left_speed = int(linear_velocity * 35)
+            right_speed = int(linear_velocity * 35)
+        
+        # Clamp speeds between -50 and 50
+        left_speed = max(-50, min(50, left_speed))
+        right_speed = max(-50, min(50, right_speed))
 
         # Create motor command array
         motor_speeds = [-left_speed, 0, right_speed, 0]
