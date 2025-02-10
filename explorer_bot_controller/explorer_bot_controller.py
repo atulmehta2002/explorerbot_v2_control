@@ -79,8 +79,8 @@ class ExplorerBotController(Node):
         #     right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
             
         if angular_velocity != 0.0 and linear_velocity == 0.0:
-            left_speed = int(angular_velocity * 16)
-            right_speed = int(-angular_velocity * 16)
+            left_speed = int(-angular_velocity * 16)
+            right_speed = int(angular_velocity * 16)
         
         else:
             left_speed = int(linear_velocity * 35)
