@@ -69,13 +69,28 @@ class ExplorerBotController(Node):
 
         # Extract linear and angular velocity
         linear_velocity = msg.linear.x  # Forward/Backward
-        angular_velocity = msg.angular.z  # Left/
-        
-        left_speed = int((linear_velocity) * 32)
-        right_speed = int((linear_velocity) * 32)
+        angular_velocity = msg.angular.z  # Left/Right
 
-        left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
-        right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
+        # if angular_velocity == 0.0 & linear_velocity != 0.0:
+        #     left_speed = int((linear_velocity) * 35)
+        #     right_speed = int((linear_velocity) * 35)
+            
+        #     left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
+        #     right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
+            
+        if angular_velocity != 0.0 & linear_velocity == 0.0:
+            left_speed = int((angular_velocity) * 16)
+            right_speed = int((angular_velocity) * 16)
+            
+            left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
+            right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
+
+        else :
+            left_speed = int((linear_velocity) * 35)
+            right_speed = int((linear_velocity) * 35)
+            
+            left_speed = max(-50, min(50, left_speed))  # Clamp between -100 and 100
+            right_speed = max(-50, min(50, right_speed))  # Clamp between -100 and 100
 
         # Create motor command array
         motor_speeds = [-left_speed, 0, right_speed, 0]
@@ -86,9 +101,9 @@ class ExplorerBotController(Node):
         # Convert angular velocity to servo movement
         step_size = 5  # Change in degrees per message
         if angular_velocity > 0.1:  # Turn right
-            servo_angle = max(servo_angle - step_size, 35)
+            servo_angle = max(servo_angle - step_size, 60)
         elif angular_velocity < -0.1:  # Turn left
-            servo_angle = min(servo_angle + step_size, 150)
+            servo_angle = min(servo_angle + step_size, 120)
 
         # Apply new servo angle
         servo0.angle = servo_angle
