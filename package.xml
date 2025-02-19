@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>explorer_bot_control_node</name>
+  <version>0.0.1</version>
+  <description>
+    A ROS 2 package for controlling an Explorer Bot using I2C communication.
+  </description>
+  
+  <maintainer email="atulmehta0510@gmail.com">Atul Mehta</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Dependencies -->
+  <depend>rclcpp</depend>
+  <depend>geometry_msgs</depend>
+  
+  <!-- System dependency for WiringPi -->
+  <build_depend>wiringpi</build_depend>
+  <exec_depend>wiringpi</exec_depend>
+
+  <!-- Build tool dependency -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Export package information -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+  <!-- Testing (optional) -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+</package>
+
