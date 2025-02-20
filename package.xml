@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>explorer_bot_control_node</name>
+  <name>explorerbot_control_node</name>
   <version>0.0.1</version>
   <description>
     A ROS 2 package for controlling an Explorer Bot using I2C communication.
