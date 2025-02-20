@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(explorer_bot_control_node)
+project(explorerbot_control_node)
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
