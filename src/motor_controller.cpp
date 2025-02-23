@@ -34,16 +34,16 @@ private:
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
 
     void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
-        double linear_x = msg->linear.x;   // Forward/backward speed
-        double angular_z = msg->angular.z; // Rotation speed
+        double linear_x  = msg->linear.x/4;   // Forward/backward speed
+        double angular_z = msg->angular.z/2; // Rotation speed
 
         // Robot parameters
         const double wheel_base = 0.175; // Distance between wheels (meters)
-        const double max_speed = 100;  // Maximum motor speed (scaled to -100 to 100)
+        const double max_speed  = 100;  // Maximum motor speed (scaled to -100 to 100)
 
         // Differential drive formula: Convert linear & angular velocity to wheel speeds
-        double left_speed = (linear_x - (wheel_base * angular_z) / 2.0) * max_speed;
-        double right_speed = (linear_x + (wheel_base * angular_z) / 2.0) * max_speed;
+        double left_speed  = (linear_x - (wheel_base * angular_z)) * max_speed;
+        double right_speed = (linear_x + (wheel_base * angular_z)) * max_speed;
 
         // Clamp speed values to [-100, 100] range
         left_speed = std::round(std::clamp(left_speed, -100.0, 100.0));
