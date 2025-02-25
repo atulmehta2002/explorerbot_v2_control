@@ -35,7 +35,7 @@ private:
 
     void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
         double linear_x  = msg->linear.x/4;   // Forward/backward speed
-        double angular_z = msg->angular.z; // Rotation speed
+        double angular_z = msg->angular.z*2; // Rotation speed
 
         // Robot parameters
         const double wheel_base = 0.175; // Distance between wheels (meters)
