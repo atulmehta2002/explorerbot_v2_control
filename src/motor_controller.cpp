@@ -35,18 +35,18 @@ private:
 
     void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
         double linear_x  = msg->linear.x/4;   // Forward/backward speed
-        double angular_z = msg->angular.z*2; // Rotation speed
+        double angular_z = msg->angular.z*2;  // Rotation speed
 
         // Robot parameters
         const double wheel_base = 0.175; // Distance between wheels (meters)
-        const double max_speed  = 100;  // Maximum motor speed (scaled to -100 to 100)
+        const double max_speed  = 100;   // Maximum motor speed (scaled to -100 to 100)
 
         // Differential drive formula: Convert linear & angular velocity to wheel speeds
         double left_speed  = (linear_x - (wheel_base * angular_z)) * max_speed;
         double right_speed = (linear_x + (wheel_base * angular_z)) * max_speed;
 
         // Clamp speed values to [-100, 100] range
-        left_speed = std::round(std::clamp(left_speed, -100.0, 100.0));
+        left_speed  = std::round(std::clamp(left_speed,  -100.0, 100.0));
         right_speed = std::round(std::clamp(right_speed, -100.0, 100.0));
 
         // Convert to int8_t for I2C communication

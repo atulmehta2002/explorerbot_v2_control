@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(explorerbot_control_node)
+project(explorerbot_v2_control)
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
@@ -24,6 +24,11 @@ ament_target_dependencies(motor_controller rclcpp geometry_msgs)
 install(TARGETS
   motor_controller
   DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY config launch 
+  DESTINATION share/${PROJECT_NAME}
 )
 
 ament_package()
