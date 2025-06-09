@@ -12,6 +12,24 @@ You'll need to build the **WiringPi** library from source. It is **not** availab
 
 ---
 
+# Installation Instructions for WiringPi
+
+```sh
+# fetch the source
+cd
+sudo apt install git
+git clone https://github.com/WiringPi/WiringPi.git
+cd WiringPi
+
+# build the package
+./build debian
+cd debian-template/wiringpi_3.14_amd64.deb 
+
+# install it
+sudo apt install ./wiringpi_3.14_amd64.deb
+```
+---
+
 ## 🔧 I2C Access Permissions
 
 To allow user-space access to I2C (via `/dev/gpiomem`), run the following commands:
