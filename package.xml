@@ -6,7 +6,7 @@
     A ROS 2 package for controlling an Explorer Bot using I2C communication.
   </description>
   
-  <maintainer email="atulmehta0510@gmail.com">Atul Mehta</maintainer>
+  <maintainer email="xyz@gmail.com">atul</maintainer>
   <license>Apache-2.0</license>
 
   <!-- Dependencies -->
